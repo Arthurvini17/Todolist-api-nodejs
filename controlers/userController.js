@@ -66,5 +66,22 @@ module.exports = {
         } catch (error) {
             return res.status(500).json({ message: 'Erro!', error })
         }
-    }
+    },
+
+    createUser: async (req, res) => {
+        const users = req.body
+
+        try {
+            const created = await Prisma.user.create({
+                data: users
+            });
+            return res.status(201).json({ message: 'usuario criado com sucesso', users: created });
+        } catch (error) {
+            res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
+        }
+    },
+
+
+
+
 }
