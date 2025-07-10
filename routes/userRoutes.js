@@ -9,5 +9,6 @@ const userController = require('../controlers/userController');
 //usando a rota 
 router.get('/', UserController.getAllUser);
 router.get('/:id', userController.getUser);
+router.delete('/:id', userController.deleteUser);
 
 module.exports = router;
