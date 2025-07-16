@@ -75,13 +75,40 @@ module.exports = {
             const created = await Prisma.user.create({
                 data: users
             });
+
             return res.status(201).json({ message: 'usuario criado com sucesso', users: created });
         } catch (error) {
             res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
         }
     },
 
+    updateUser: async (req, res) => {
+        const users = req.body;
+        const { id } = req.params
 
+        console.log('Dados recebidos para atualização:', req.body);
+        try {
 
+            const existingUser = await Prisma.user.findUnique({
+                where: { id: Number(id) },
+            });
+
+            if (!existingUser) {
+                return res.status(404).json({ message: 'usuario não encontrado' })
+            }
+
+            const updated = await Prisma.user.update({
+                where: { id: Number(id) },
+                data: users
+            });
+
+            return res.status(200).json({ message: 'usuarioa atualizado com ssucesso', users: updated });
+
+        } catch (error) {
+
+            return res.status(500).json({ message: 'usuario não atualizado', error });
+
+        }
+    }
 
 }
