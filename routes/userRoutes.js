@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router()
 
 //importa o controller que irá usar
-const UserController = require('../controlers/userController');
 const userValidation = require('../validations/userValidation');
 const { validationResult } = require('express-validator');
 const userController = require('../controlers/userController');
 
 
 //usando a rota 
-router.get('/', UserController.getAllUser);
+router.get('/', userController.getAllUser);
 router.get('/:id', userController.getUser);
 router.delete('/:id', userController.deleteUser);
 router.put('/:id', userController.updateUser);
@@ -23,5 +22,8 @@ router.post('/', userValidation, (req, res) => {
 
     userController.createUser(req, res);
 });
+
+
+
 
 module.exports = router;

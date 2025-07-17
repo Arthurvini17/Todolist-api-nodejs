@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -19,4 +19,12 @@ model User {
   L_name    String
   email     String
   createdAt DateTime @default(now())
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  Task_name   String
+  Task_desc   String
+  Iscompleted Boolean
+  createdAt   DateTime @default(now())
 }
