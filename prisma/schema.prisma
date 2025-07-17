@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://mybd_na2t_user:s4VHKX3ZiK0ksYKz2gqRuyvEX39Qxw6m@dpg-d1s4v9ngi27c73dmm40g-a.oregon-postgres.render.com:5432/mybd_na2t?schema=public&sslmode=require"
 }
 
 model User {
