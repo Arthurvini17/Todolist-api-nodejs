@@ -18,7 +18,7 @@ model User {
   F_name    String
   L_name    String
   email     String
-  password  String?
+  password  String
   createdAt DateTime @default(now())
   tasks     Task[]
 }
