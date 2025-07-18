@@ -13,6 +13,8 @@ router.get('/:id', userController.getUser);
 router.delete('/:id', userController.deleteUser);
 router.put('/:id', userController.updateUser);
 
+router.post('/login', userController.AuthUser)
+
 
 router.post('/', userValidation, (req, res) => {
     const errors = validationResult(req);

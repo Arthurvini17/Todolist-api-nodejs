@@ -1,6 +1,6 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
-
+const bcrypt = require('bcryptjs');
 const Prisma = new PrismaClient();
 
 
@@ -74,11 +74,18 @@ module.exports = {
     },
 
     createUser: async (req, res) => {
-        const users = req.body
+        const { F_name, L_name, email, password } = req.body;
 
         try {
+
+            const hashedPassword = await bcrypt.hash(password, 10);
             const created = await Prisma.user.create({
-                data: users
+                data: {
+                    F_name,
+                    L_name,
+                    email,
+                    password: hashedPassword
+                }
             });
 
             return res.status(201).json({ message: 'usuario criado com sucesso', users: created });
@@ -114,6 +121,36 @@ module.exports = {
             return res.status(500).json({ message: 'usuario não atualizado', error });
 
         }
+    },
+
+    AuthUser: async (req, res) => {
+        const { email, password } = req.body
+
+        try {
+            const user = await Prisma.user.findFirst({
+                where: { email }
+            })
+
+            if (!user) {
+                res.status(400).json({ message: 'Usuario não encontrado' })
+            }
+
+            const passwordCorrect = await bcrypt.compare(password, user.password);
+
+            if (!passwordCorrect) {
+                res.status(401).json({ message: 'Senha incorreta' });
+            }
+
+            res.status(200).json({ message: 'Login feito' });
+
+
+        } catch (error) {
+            res.status(500).json({ message: 'erro interno', error: error.message });
+        }
+
+
     }
+
+
 
 }
