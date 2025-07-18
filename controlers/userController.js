@@ -74,6 +74,7 @@ module.exports = {
     },
 
     createUser: async (req, res) => {
+        console.log(req.body)
         const { F_name, L_name, email, password } = req.body;
 
         try {
@@ -132,7 +133,7 @@ module.exports = {
             });
 
             if (!user) {
-                res.status(404).json({ message: 'Usuario não encontrado' });
+                return res.status(404).json({ message: 'Usuario não encontrado' });
             }
 
             const ispasswordcorrect = await bcrypt.compare(password, user.password)
