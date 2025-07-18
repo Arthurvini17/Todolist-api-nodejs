@@ -124,28 +124,25 @@ module.exports = {
     },
 
     AuthUser: async (req, res) => {
-        const { email, password } = req.body
+        const { email, password } = req.body;
 
         try {
             const user = await Prisma.user.findFirst({
                 where: { email }
-            })
+            });
 
             if (!user) {
-                res.status(400).json({ message: 'Usuario não encontrado' })
+                res.status(404).json({ message: 'Usuario não encontrado' });
             }
 
-            const passwordCorrect = await bcrypt.compare(password, user.password);
+            const ispasswordcorrect = await bcrypt.compare(password, user.password)
 
-            if (!passwordCorrect) {
-                res.status(401).json({ message: 'Senha incorreta' });
+            if (!ispasswordcorrect) {
+                return res.status(400).json({ message: 'Senha incorreta' });
             }
-
             res.status(200).json({ message: 'Login feito' });
-
-
         } catch (error) {
-            res.status(500).json({ message: 'erro interno', error: error.message });
+            res.status(500).json({ message: 'Erro interno', error: error.message });
         }
 
 
