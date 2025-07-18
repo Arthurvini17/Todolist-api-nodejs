@@ -14,9 +14,14 @@ const Prisma = new PrismaClient();
 // ];
 
 module.exports = {
+    //include é incluir o relacionamento de tabelas
     getAllUser: async (req, res) => {
         try {
-            const user = await Prisma.user.findMany({})
+            const user = await Prisma.user.findMany({
+                include: {
+                    tasks: true
+                }
+            })
             res.status(200).json({ message: 'Busca de usuarios:', user })
         } catch (error) {
             res.status(500).json({ message: 'Não foi possivel buscar o usuario', error })
@@ -33,6 +38,9 @@ module.exports = {
 
         try {
             const user = await Prisma.user.findUnique({
+                include: {
+                    tasks: true
+                },
                 where: { id: Number(id) },
             });
             if (!user) {

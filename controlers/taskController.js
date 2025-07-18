@@ -5,6 +5,20 @@ const Prisma = new PrismaClient();
 
 module.exports = {
 
+    //buscar todas tasks
+    getAllTasks: async (req, res) => {
+        try {
+            const task = await Prisma.task.findMany({
+            });
+
+            if (task.length === 0) {
+                return res.status(404).json({ message: 'Não foi possivel achar tasks' })
+            }
+            return res.status(200).json({ message: 'Tasks', task })
+        } catch (error) {
+            return res.status(500).json({ message: 'Não foi possivel buscar as tasks!', error })
+        }
+    },
     //buscar a task por id
     getTask: async (req, res) => {
 
