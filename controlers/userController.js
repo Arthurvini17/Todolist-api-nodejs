@@ -1,8 +1,6 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 
-
-
 const Prisma = new PrismaClient();
 
 
@@ -27,7 +25,6 @@ module.exports = {
 
     getUser: async (req, res) => {
 
-
         const { id } = req.params;
 
         if (!id || isNaN(id)) {
@@ -42,7 +39,7 @@ module.exports = {
                 return res.status(404).json({ message: 'usuario não existe' });
             }
 
-            return res.status(201).json({ message: 'Usuario encontrado', user });
+            return res.status(200).json({ message: 'Usuario encontrado', user });
         } catch (error) {
             return res.status(500).json({ message: 'Não foi possivel econtrar um usuario', error })
         }

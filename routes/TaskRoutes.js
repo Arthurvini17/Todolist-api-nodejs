@@ -1,9 +1,9 @@
-// const express = require('express');
-// const router = express.Router()
+const express = require('express');
+const router = express.Router()
 
 
-// const taskController = require('../controlers/taskController');
+const taskController = require('../controlers/taskController');
 
-// router.get('/', taskController.getTask);
+router.get('/:id', taskController.getTask);
 
-// module.exports = router;
+module.exports = router;
